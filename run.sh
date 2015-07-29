@@ -27,5 +27,3 @@ if [ "$MONGO_ROLE" == "primary" ]; then
 fi
 
 fg
-
-
