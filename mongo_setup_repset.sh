@@ -4,12 +4,19 @@ echo "************************************************************"
 echo "Setting up replica set"
 echo "************************************************************"
 
-RET=1
+mongo admin --eval "help" > /dev/null 2>&1
+RET=$?
+
 while [[ RET -ne 0 ]]; do
-  echo "=> Waiting for MongoDB to start"
-  sleep 5
-  mongo admin --eval "help" >/dev/null 2>&1
+  echo "Waiting for MongoDB to start..."
+  mongo admin --eval "help" > /dev/null 2>&1
   RET=$?
+  sleep 1
+
+  if [[ -f /data/db/mongod.lock ]]; then
+    echo "Removing Mongo lock file"
+    rm /data/db/mongod.lock
+  fi
 done
 
 # Login as root and configure replica set

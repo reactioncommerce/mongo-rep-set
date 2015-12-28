@@ -5,12 +5,14 @@ mongod --storageEngine $STORAGE_ENGINE &
 fg
 
 
-RET=1
+mongo admin --eval "help" > /dev/null 2>&1
+RET=$?
+
 while [[ RET -ne 0 ]]; do
-  echo "=> Waiting for MongoDB to start"
-  sleep 5
-  mongo admin --eval "help" >/dev/null 2>&1
+  echo "Waiting for MongoDB to start..."
+  mongo admin --eval "help" > /dev/null 2>&1
   RET=$?
+  sleep 1
 done
 
 echo "************************************************************"
