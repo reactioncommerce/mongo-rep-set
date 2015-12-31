@@ -86,7 +86,7 @@ mongodb://myAppUser:myAppPassword@mongo1:27017,mongo2:27017/myAppDatabase?replic
 
 ## Environment Variables
 
-Here are all of the available environment variables and their defaults.
+Here are all of the available environment variables and their defaults.  Note that if you set `REP_SET`, you must set it to the same value on all 3 containers.
 
 ```sh
 # mongod config
