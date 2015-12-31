@@ -76,3 +76,26 @@ The primary will start up, configure your root and app users, shut down, and the
 ```sh
 mongodb://username:password@mongoUrl1:27017,mongoUrl2:27017/databaseName?replicaSet=rs0
 ```
+
+## Environment Variables
+
+Here are all of the available environment variables and their defaults.
+
+```sh
+# mongod config
+STORAGE_ENGINE wiredTiger
+JOURNALING yes
+REP_SET rs0
+AUTH yes
+MONGO_SECONDARY mongo2:27017
+MONGO_ARBITER mongo3:27017
+
+# mongo root user
+MONGO_ROOT_USER root
+MONGO_ROOT_PASSWORD root123
+
+# mongo app user + database (user is given oplog access)
+MONGO_APP_USER myAppUser
+MONGO_APP_PASSWORD myAppPassword
+MONGO_APP_DATABASE myAppDatabase
+```
