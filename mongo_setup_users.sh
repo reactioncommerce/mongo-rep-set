@@ -23,7 +23,7 @@ echo "************************************************************"
 mongo admin --eval "db.createUser({user: '$MONGO_ROOT_USER', pwd: '$MONGO_ROOT_PASSWORD', roles:[{ role: 'root', db: 'admin' }]});"
 
 # create app user/database
-mongo $MONGO_APP_DATABASE --eval "db.createUser({user: '$MONGO_APP_USER', pwd: '$MONGO_APP_PASSWORD', roles:[{role:'readWrite', db:'$MONGO_APP_DATABASE'}]});"
+mongo $MONGO_APP_DATABASE --eval "db.createUser({ user: '$MONGO_APP_USER', pwd: '$MONGO_APP_PASSWORD', roles: [{ role: 'readWrite', db: '$MONGO_APP_DATABASE' }, { role: 'read', db: 'local' }]});"
 
 
 echo "************************************************************"
