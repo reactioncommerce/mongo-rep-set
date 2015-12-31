@@ -75,8 +75,13 @@ docker run -d
 
 The primary will start up, configure your root and app users, shut down, and then start up once more and configure the replica set.  Assuming the secondary and arbiter are reachable, the server will now be ready for authenticated connections.  You can use the standard two server Mongo URL to connect to the primary/secondary like this:
 
+#### Connect
+
+Note that the following connection url is using default env var values (more info below), so it should work if you haven't overwritten any of the variables yourself.
+
 ```sh
-mongodb://username:password@mongoUrl1:27017,mongoUrl2:27017/databaseName?replicaSet=rs0
+
+mongodb://myAppUser:myAppPassword@mongo1:27017,mongo2:27017/myAppDatabase?replicaSet=rs0
 ```
 
 ## Environment Variables
