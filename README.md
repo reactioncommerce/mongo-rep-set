@@ -2,6 +2,8 @@
 
 This MongoDB Docker container is intended to be used to set up a 3 node replica set.
 
+Mongo version:  **3.2.0**
+
 ## About
 
 A MongoDB [replica set](https://docs.mongodb.org/v3.0/replication/) consists of at least 3 Mongo instances. In this case, they will be a primary, secondary, and an arbiter. To use this project as a replica set, you simply launch three instances of this container across three separate host servers and the primary will configure your users and replica set.  Also note that each server must be able to access the others (discovery must work in both directions).
