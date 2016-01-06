@@ -1,0 +1,33 @@
+mongo1:
+  restart: always
+  environment:
+    MONGO_ROLE: primary
+  tty: true
+  hostname: mongo1
+  image: ongoworks/mongo-rep-set:latest
+  links:
+  - mongo2:mongo2
+  - mongo3:mongo3
+  stdin_open: true
+
+mongo2:
+  restart: always
+  tty: true
+  hostname: mongo2
+  image: ongoworks/mongo-rep-set:latest
+  links:
+  - mongo1:mongo1
+  - mongo3:mongo3
+  stdin_open: true
+
+mongo3:
+  restart: always
+  environment:
+    JOURNALING: 'no'
+  tty: true
+  hostname: mongo3
+  image: ongoworks/mongo-rep-set:latest
+  links:
+  - mongo1:mongo1
+  - mongo2:mongo2
+  stdin_open: true
