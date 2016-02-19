@@ -1,6 +1,16 @@
 #!/bin/bash
 
-mongod --storageEngine $STORAGE_ENGINE &
+mongodb_setup_cmd="mongod --storageEngine $STORAGE_ENGINE"
+
+if [ "$MONGO_DB_PATH" != "" ]; then
+  if [ ! -d "$MONGO_DB_PATH" ]; then
+    echo "Creating custom directory for MongoDB data at $MONGO_DB_PATH"
+    mkdir -p $MONGO_DB_PATH
+  fi
+  mongodb_setup_cmd="$mongodb_setup_cmd --dbpath $MONGO_DB_PATH"
+fi
+
+$mongodb_setup_cmd &
 
 fg
 

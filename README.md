@@ -96,6 +96,7 @@ REP_SET rs0
 AUTH yes
 MONGO_SECONDARY mongo2:27017
 MONGO_ARBITER mongo3:27017
+MONGO_DB_PATH /data/db
 
 # mongo root user
 MONGO_ROOT_USER root

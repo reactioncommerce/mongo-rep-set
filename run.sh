@@ -20,6 +20,14 @@ if [ "$OPLOG_SIZE" != "" ]; then
   cmd="$cmd --oplogSize $OPLOG_SIZE"
 fi
 
+if [ "$MONGO_DB_PATH" != "" ]; then
+  if [ ! -d "$MONGO_DB_PATH" ]; then
+    echo "Creating custom directory for MongoDB data at $MONGO_DB_PATH"
+    mkdir -p $MONGO_DB_PATH
+  fi
+  cmd="$cmd --dbpath $MONGO_DB_PATH"
+fi
+
 $cmd &
 
 if [ "$MONGO_ROLE" == "primary" ]; then
