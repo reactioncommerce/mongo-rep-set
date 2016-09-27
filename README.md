@@ -2,7 +2,7 @@
 
 This MongoDB Docker container is intended to be used to set up a 3 node replica set.
 
-Mongo version:  **3.2.5**
+Mongo version:  **3.2.9**
 
 ## About
 
