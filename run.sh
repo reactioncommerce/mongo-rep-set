@@ -12,7 +12,7 @@ if [ "$AUTH" == "yes" ]; then
   cmd="$cmd --auth"
 fi
 
-if [ "$JOURNALING" == "no" ]; then
+if [ "$JOURNALING" == "false" ]; then
   cmd="$cmd --nojournal"
 fi
 

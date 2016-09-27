@@ -57,7 +57,7 @@ RUN mkdir -p /data/db && chown -R mongodb:mongodb /data/db
 # mongod config
 ENV AUTH yes
 ENV STORAGE_ENGINE wiredTiger
-ENV JOURNALING yes
+ENV JOURNALING true
 ENV REP_SET rs0
 ENV MONGO_SECONDARY mongo2:27017
 ENV MONGO_ARBITER mongo3:27017

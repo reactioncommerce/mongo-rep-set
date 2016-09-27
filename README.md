@@ -52,7 +52,7 @@ The only difference here is you can turn off journaling. From the [official docs
 > An arbiter does not store data, but until the arbiter’s mongod process is added to the replica set, the arbiter will act like any other mongod process and start up with a set of data files and with a full-sized journal. To minimize the default creation of data, you can disable journaling.
 
 ```sh
-docker run -d -p 27017:27017 -e JOURNLING=no yourname/mongo-rep-set:latest
+docker run -d -p 27017:27017 -e JOURNLING=false yourname/mongo-rep-set:latest
 ```
 
 #### Primary
@@ -91,7 +91,7 @@ Here are all of the available environment variables and their defaults.  Note th
 ```sh
 # mongod config
 STORAGE_ENGINE wiredTiger
-JOURNALING yes
+JOURNALING true
 REP_SET rs0
 AUTH yes
 MONGO_SECONDARY mongo2:27017
