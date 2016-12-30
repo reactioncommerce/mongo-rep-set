@@ -40,4 +40,6 @@ EXPOSE 27017 28017
 
 WORKDIR $MONGO_SCRIPTS_DIR
 
+ENTRYPOINT ["./entrypoint.sh"]
+
 CMD ["./run.sh"]
