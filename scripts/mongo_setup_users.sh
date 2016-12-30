@@ -2,7 +2,6 @@
 
 mongodb_setup_cmd="gosu mongodb mongod --storageEngine $MONGO_STORAGE_ENGINE"
 
-
 if [ ! -d "$MONGO_DB_PATH" ]; then
   mkdir -p $MONGO_DB_PATH
 fi

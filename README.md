@@ -90,10 +90,11 @@ Here are all of the available environment variables and their defaults.  Note th
 
 ```sh
 # mongod config
-STORAGE_ENGINE wiredTiger
-JOURNALING true
-REP_SET rs0
-AUTH yes
+MONGO_STORAGE_ENGINE wiredTiger
+MONGO_JOURNALING true
+MONGO_REP_SET rs0
+MONGO_AUTH true
+MONGO_OPLOG_SIZE # not set, but you can override the default
 MONGO_SECONDARY mongo2:27017
 MONGO_ARBITER mongo3:27017
 MONGO_DB_PATH /data/db

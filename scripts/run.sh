@@ -6,17 +6,17 @@ if [ "$MONGO_ROLE" == "primary" ]; then
 fi
 
 mongodb_cmd="gosu mongodb mongod --storageEngine $MONGO_STORAGE_ENGINE --keyFile $MONGO_KEYFILE"
-cmd="$mongodb_cmd --httpinterface --rest --replSet $REP_SET"
+cmd="$mongodb_cmd --httpinterface --rest --replSet $MONGO_REP_SET"
 
 if [ "$MONGO_AUTH" == true ]; then
   cmd="$cmd --auth"
 fi
 
-if [ "$JOURNALING" == false ]; then
+if [ "$MONGO_JOURNALING" == false ]; then
   cmd="$cmd --nojournal"
 fi
 
-if [[ "$OPLOG_SIZE" ]]; then
+if [[ "$MONGO_OPLOG_SIZE" ]]; then
   cmd="$cmd --oplogSize $OPLOG_SIZE"
 fi
 
