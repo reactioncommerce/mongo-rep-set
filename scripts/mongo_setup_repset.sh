@@ -4,12 +4,12 @@ echo "************************************************************"
 echo "Setting up replica set"
 echo "************************************************************"
 
-mongo admin --eval "help" > /dev/null 2>&1
+gosu mongodb mongo admin --eval "help" > /dev/null 2>&1
 RET=$?
 
 while [[ RET -ne 0 ]]; do
   echo "Waiting for MongoDB to start..."
-  mongo admin --eval "help" > /dev/null 2>&1
+  gosu mongodb mongo admin --eval "help" > /dev/null 2>&1
   RET=$?
   sleep 1
 
@@ -20,6 +20,6 @@ while [[ RET -ne 0 ]]; do
 done
 
 # Login as root and configure replica set
-mongo admin -u $MONGO_ROOT_USER -p $MONGO_ROOT_PASSWORD --eval "rs.initiate();"
-mongo admin -u $MONGO_ROOT_USER -p $MONGO_ROOT_PASSWORD --eval "rs.add('$MONGO_SECONDARY');"
-mongo admin -u $MONGO_ROOT_USER -p $MONGO_ROOT_PASSWORD --eval "rs.addArb('$MONGO_ARBITER');"
+gosu mongodb mongo admin -u $MONGO_ROOT_USER -p $MONGO_ROOT_PASSWORD --eval "rs.initiate();"
+gosu mongodb mongo admin -u $MONGO_ROOT_USER -p $MONGO_ROOT_PASSWORD --eval "rs.add('$MONGO_SECONDARY');"
+gosu mongodb mongo admin -u $MONGO_ROOT_USER -p $MONGO_ROOT_PASSWORD --eval "rs.addArb('$MONGO_ARBITER');"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mongodb_setup_cmd="mongod --storageEngine $STORAGE_ENGINE"
+mongodb_setup_cmd="gosu mongodb mongod --storageEngine $MONGO_STORAGE_ENGINE"
 
 if [ "$MONGO_DB_PATH" != "" ]; then
   if [ ! -d "$MONGO_DB_PATH" ]; then
@@ -15,12 +15,12 @@ $mongodb_setup_cmd &
 fg
 
 
-mongo admin --eval "help" > /dev/null 2>&1
+gosu mongodb mongo admin --eval "help" > /dev/null 2>&1
 RET=$?
 
 while [[ RET -ne 0 ]]; do
   echo "Waiting for MongoDB to start..."
-  mongo admin --eval "help" > /dev/null 2>&1
+  gosu mongodb mongo admin --eval "help" > /dev/null 2>&1
   RET=$?
   sleep 1
 done
@@ -30,15 +30,15 @@ echo "Setting up users..."
 echo "************************************************************"
 
 # create root user
-mongo admin --eval "db.createUser({user: '$MONGO_ROOT_USER', pwd: '$MONGO_ROOT_PASSWORD', roles:[{ role: 'root', db: 'admin' }]});"
+gosu mongodb mongo admin --eval "db.createUser({user: '$MONGO_ROOT_USER', pwd: '$MONGO_ROOT_PASSWORD', roles:[{ role: 'root', db: 'admin' }]});"
 
 # create app user/database
-mongo $MONGO_APP_DATABASE --eval "db.createUser({ user: '$MONGO_APP_USER', pwd: '$MONGO_APP_PASSWORD', roles: [{ role: 'readWrite', db: '$MONGO_APP_DATABASE' }, { role: 'read', db: 'local' }]});"
+gosu mongodb mongo $MONGO_APP_DATABASE --eval "db.createUser({ user: '$MONGO_APP_USER', pwd: '$MONGO_APP_PASSWORD', roles: [{ role: 'readWrite', db: '$MONGO_APP_DATABASE' }, { role: 'read', db: 'local' }]});"
 
 
 echo "************************************************************"
 echo "Shutting down"
 echo "************************************************************"
-mongo admin --eval "db.shutdownServer();"
+gosu mongodb mongo admin --eval "db.shutdownServer();"
 
 sleep 3

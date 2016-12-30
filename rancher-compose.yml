@@ -1,8 +1,0 @@
-mongo1:
-  scale: 1
-
-mongo2:
-  scale: 1
-
-mongo3:
-  scale: 1
