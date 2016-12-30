@@ -20,18 +20,13 @@ if [[ "$OPLOG_SIZE" ]]; then
   cmd="$cmd --oplogSize $OPLOG_SIZE"
 fi
 
-if [[ "$MONGO_DB_PATH" ]]; then
-  if [ ! -d "$MONGO_DB_PATH" ]; then
-    echo "Creating custom directory for MongoDB data at $MONGO_DB_PATH"
-    mkdir -p $MONGO_DB_PATH
-  fi
-  cmd="$cmd --dbpath $MONGO_DB_PATH"
+if [ ! -d "$MONGO_DB_PATH" ]; then
+  mkdir -p $MONGO_DB_PATH
 fi
 
-printf "Starting MongoDB with command: \n"
-printf "\n$cmd \n"
+chown -R mongodb:mongodb $MONGO_DB_PATH
 
-$cmd &
+$cmd --dbpath $MONGO_DB_PATH &
 
 if [ "$MONGO_ROLE" == "primary" ]; then
   $MONGO_SCRIPTS_DIR/mongo_setup_repset.sh

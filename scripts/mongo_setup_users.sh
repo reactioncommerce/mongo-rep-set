@@ -2,13 +2,14 @@
 
 mongodb_setup_cmd="gosu mongodb mongod --storageEngine $MONGO_STORAGE_ENGINE"
 
-if [ "$MONGO_DB_PATH" != "" ]; then
-  if [ ! -d "$MONGO_DB_PATH" ]; then
-    echo "Creating custom directory for MongoDB data at $MONGO_DB_PATH"
-    mkdir -p $MONGO_DB_PATH
-  fi
-  mongodb_setup_cmd="$mongodb_setup_cmd --dbpath $MONGO_DB_PATH"
+
+if [ ! -d "$MONGO_DB_PATH" ]; then
+  mkdir -p $MONGO_DB_PATH
 fi
+
+chown -R mongodb:mongodb $MONGO_DB_PATH
+
+mongodb_setup_cmd="$mongodb_setup_cmd --dbpath $MONGO_DB_PATH"
 
 $mongodb_setup_cmd &
 
