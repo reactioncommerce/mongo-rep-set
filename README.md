@@ -2,38 +2,20 @@
 
 This MongoDB Docker container is intended to be used to set up a 3 node replica set.
 
-Mongo version:  **3.2.9**
+Mongo version:  **3.4.0**
 
 ## About
 
-A MongoDB [replica set](https://docs.mongodb.org/v3.0/replication/) consists of at least 3 Mongo instances. In this case, they will be a primary, secondary, and an arbiter. To use this project as a replica set, you simply launch three instances of this container across three separate host servers and the primary will configure your users and replica set.  Also note that each server must be able to access the others (discovery must work in both directions).
+A MongoDB [replica set](https://docs.mongodb.org/v3.4/replication/) consists of at least 3 Mongo instances. In this case, they will be a primary, secondary, and an arbiter. To use this project as a replica set, you simply launch three instances of this container across three separate host servers and the primary will configure your users and replica set.  Also note that each server must be able to access the others (discovery must work in both directions).
 
 ## Setup
 
-Before you build the container, you will need to create the keyfile that Mongo uses for [internal authentication](https://docs.mongodb.org/v3.0/tutorial/enable-internal-authentication/) between replica set members. Each of your members needs to have the same key. Do NOT commit your generated key to a public repo.
-
-The file already exists in this repo (`mongodb-keyfile`), but it's blank. If you don't generate the key before attempting to build the container, the build script will throw an error remind you how to create the key (see below).
-
-#### Generate keyfile
-
-From the root of this project, run the following:
-
-```sh
-openssl rand -base64 741 > mongodb-keyfile
-```
+You will need to create your own custom build of this image to generate a unique [keyfile](https://docs.mongodb.com/v3.4/tutorial/enforce-keyfile-access-control-in-existing-replica-set/) that Mongo uses for [internal authentication](https://docs.mongodb.org/v3.4/tutorial/enable-internal-authentication/) between replica set members. Each of your replica set members needs to have the same key, so be sure to use the same image in each location. Once using your build in production do NOT publish your Docker image to a public repo because it will container your private key.
 
 #### Build
 
 ```sh
 docker build -t yourname/mongo-rep-set:latest .
-```
-
-#### Push
-
-Push it to Docker Hub (or wherever you host Docker images).  Note that you now have a keyfile in this container that you do NOT want to share publicly.  So make sure that wherever you host this container is private.  (Another option is to use [Docker Machine](https://docs.docker.com/machine/) to [build this container on the remote servers](https://docs.docker.com/machine/get-started-cloud/) that you're going to be running them on.  That allows you to skip private container repo hosting).
-
-```sh
-docker push yourname/mongo-rep-set:latest
 ```
 
 ## Launch
@@ -48,7 +30,7 @@ docker run -d -p 27017:27017 yourname/mongo-rep-set:latest
 
 #### Arbiter
 
-The only difference here is you can turn off journaling. From the [official docs](https://docs.mongodb.org/v3.0/tutorial/add-replica-set-arbiter/#considerations):
+The only difference here is you can turn off journaling. From the [official docs](https://docs.mongodb.org/v3.4/tutorial/add-replica-set-arbiter/#considerations):
 > An arbiter does not store data, but until the arbiter’s mongod process is added to the replica set, the arbiter will act like any other mongod process and start up with a set of data files and with a full-sized journal. To minimize the default creation of data, you can disable journaling.
 
 ```sh
@@ -77,7 +59,7 @@ The primary will start up, configure your root and app users, shut down, and the
 
 #### Connect
 
-Note that the following connection url is using default env var values (more info below), so it should work if you haven't overwritten any of the variables yourself.
+Note that the following connection url is using default env var values (more info on those below), so it should work if you haven't overwritten any of the variables yourself.
 
 ```sh
 
@@ -86,7 +68,7 @@ mongodb://myAppUser:myAppPassword@mongo1:27017,mongo2:27017/myAppDatabase?replic
 
 ## Environment Variables
 
-Here are all of the available environment variables and their defaults.  Note that if you set `REP_SET`, you must set it to the same value on all 3 containers.
+Here are all of the available environment variables and their defaults.  Note that if you set `MONGO_REP_SET`, you must set it to the same value on all 3 containers.
 
 ```sh
 # mongod config
