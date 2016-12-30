@@ -8,7 +8,7 @@ fi
 mongodb_cmd="gosu mongodb mongod --storageEngine $MONGO_STORAGE_ENGINE --keyFile $MONGO_KEYFILE"
 cmd="$mongodb_cmd --httpinterface --rest --replSet $REP_SET"
 
-if [ "$AUTH" == true ]; then
+if [ "$MONGO_AUTH" == true ]; then
   cmd="$cmd --auth"
 fi
 

@@ -16,7 +16,7 @@ COPY scripts/install_deps.sh $MONGO_SCRIPTS_DIR/install_deps.sh
 RUN $MONGO_SCRIPTS_DIR/install_deps.sh
 
 # mongod config
-ENV AUTH false
+ENV MONGO_AUTH true
 ENV MONGO_STORAGE_ENGINE wiredTiger
 ENV JOURNALING true
 ENV REP_SET rs0
