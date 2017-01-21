@@ -1,6 +1,16 @@
 #!/bin/bash
 set -m
 
+if [[ -z "${MONGO_KEY}" ]]; then
+  echo "Using generated keyFile"
+else
+	echo "Using MONGO_KEY environment variable"
+	chmod 755 /opt/mongo/keyfile
+  echo $MONGO_KEY > /opt/mongo/keyfile
+  chmod 400 $MONGO_KEYFILE
+fi
+
+
 if [ "$MONGO_ROLE" == "primary" ]; then
   $MONGO_SCRIPTS_DIR/mongo_setup_users.sh
 fi

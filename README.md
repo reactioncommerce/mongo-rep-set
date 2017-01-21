@@ -89,4 +89,7 @@ MONGO_ROOT_PASSWORD root123
 MONGO_APP_USER myAppUser
 MONGO_APP_PASSWORD myAppPassword
 MONGO_APP_DATABASE myAppDatabase
+
+# Optional MONGO_KEY, if you decide to inject the value for the keyfile rather than using the generated keyfile, you can use the environment variable instead
+MONGO_KEY="keyfilestring"
 ```
