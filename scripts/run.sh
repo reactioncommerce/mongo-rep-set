@@ -5,7 +5,9 @@ if [[ -z "${MONGO_KEY}" ]]; then
   echo "Using generated keyFile"
 else
 	echo "Using MONGO_KEY environment variable"
+	chmod 755 /opt/mongo/keyfile
   echo $MONGO_KEY > /opt/mongo/keyfile
+  chmod 400 $MONGO_KEYFILE
 fi
 
 
